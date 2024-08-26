@@ -17,7 +17,7 @@ class BaseForm {
 class TextInputForm extends BaseForm {
   constructor(
     label: string = "Text Input",
-    required: boolean = false,
+    required: boolean = true,
     public placeholder: string = "Enter text here",
     value: string = "",
   ) {
@@ -29,7 +29,7 @@ class TextInputForm extends BaseForm {
 class TextareaInputForm extends BaseForm {
   constructor(
     label: string = "Textarea Input",
-    required: boolean = false,
+    required: boolean = true,
     public placeholder: string = "Enter long text here",
     value: string = "",
   ) {
@@ -41,7 +41,7 @@ class TextareaInputForm extends BaseForm {
 class RadioInputForm extends BaseForm {
   constructor(
     label: string = "Radio Input",
-    required: boolean = false,
+    required: boolean = true,
     public options: Array<{ value: string; label: string }> = [
       { value: "option1", label: "Option 1" },
       { value: "option2", label: "Option 2" },
