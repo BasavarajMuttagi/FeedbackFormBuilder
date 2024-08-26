@@ -9,7 +9,11 @@ import {
   Textbox,
 } from "@phosphor-icons/react";
 
-const SidePanel = () => {
+const SidePanel = ({
+  createFormField,
+}: {
+  createFormField: (type: "text" | "textarea" | "radio") => void;
+}) => {
   return (
     <div className="h-full text-white/60 space-y-5 p-4">
       <h2 className="font-semibold tracking-wide text-center text-white">
@@ -25,6 +29,7 @@ const SidePanel = () => {
             size={24}
             weight="bold"
             className="text-blue-500 cursor-pointer"
+            onClick={() => createFormField("textarea")}
           />
         </li>
         <li className="flex items-center justify-between">
@@ -69,6 +74,7 @@ const SidePanel = () => {
             size={24}
             weight="bold"
             className="text-blue-500 cursor-pointer"
+            onClick={() => createFormField("text")}
           />
         </li>
         <li className="flex items-center justify-between">
@@ -80,6 +86,7 @@ const SidePanel = () => {
             size={24}
             weight="bold"
             className="text-blue-500 cursor-pointer"
+            onClick={() => createFormField("radio")}
           />
         </li>
         <li className="flex items-center justify-between">
