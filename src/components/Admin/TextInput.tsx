@@ -1,5 +1,6 @@
 import { PencilSimple, Trash } from "@phosphor-icons/react";
 import { FormField, TextInputFormType } from "../../Classes/Form";
+import { useActiveSelection } from "../../hooks/useActiveSelection";
 
 const TextInput = ({
   field,
@@ -10,6 +11,7 @@ const TextInput = ({
   onDelete: () => void;
   onChange: (id: string, updatedField: Partial<FormField>) => void;
 }) => {
+  const setActiveSelection = useActiveSelection()[1];
   const { errorMessage, id, label, ...rest } = field;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +35,7 @@ const TextInput = ({
           size={20}
           weight="fill"
           className="text-gray-600 cursor-pointer"
+          onClick={() => setActiveSelection({ id })}
         />
         <Trash
           size={20}

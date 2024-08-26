@@ -12,8 +12,11 @@ import SidePanel from "../components/Admin/SidePanel";
 import AdminLayout from "../layouts/AdminLayout";
 import TextInput from "../components/Admin/TextInput";
 import TextareaInput from "../components/Admin/TextareaInput";
+import EditFieldForm from "../components/Admin/EditFieldForm";
+import { useActiveSelection } from "../hooks/useActiveSelection";
 
 const FormDetails = () => {
+  const [activeSelection, setActiveSelection] = useActiveSelection();
   const [formStructure, setFormStructure] = useState<FormStructure>({
     formName: "Enter Your Form Name",
     formFields: [],
@@ -24,6 +27,10 @@ const FormDetails = () => {
       ...prevStructure,
       formFields: prevStructure.formFields.filter((field) => field.id !== id),
     }));
+
+    if (typeof activeSelection === "object" && activeSelection.id === id) {
+      setActiveSelection("FIELDS");
+    }
   };
 
   const onChange = (id: string, updatedField: Partial<FormField>) => {
@@ -146,7 +153,14 @@ const FormDetails = () => {
         </div>
       </AdminLayout.Main>
       <AdminLayout.Side>
-        <SidePanel createFormField={createFormField} />
+        {activeSelection === "FIELDS" ? (
+          <SidePanel createFormField={createFormField} />
+        ) : (
+          <EditFieldForm
+            onChange={onChange}
+            formFields={formStructure.formFields}
+          />
+        )}
       </AdminLayout.Side>
     </AdminLayout>
   );
