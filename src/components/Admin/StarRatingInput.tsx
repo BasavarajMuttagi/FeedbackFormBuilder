@@ -1,60 +1,13 @@
-import {
-  PencilSimple,
-  Smiley,
-  SmileyMeh,
-  SmileySad,
-  SmileyWink,
-  SmileyXEyes,
-  Trash,
-} from "@phosphor-icons/react";
-import { FormField, SmileyRatingInputFormType } from "../../Classes/Form";
+import { PencilSimple, Star, Trash } from "@phosphor-icons/react";
+import { FormField, StarRatingInputFormType } from "../../Classes/Form";
 import { useActiveSelection } from "../../hooks/useActiveSelection";
 
-const getSmileyIcon = (value: string, isSelected: boolean) => {
-  const baseSize = 24;
-  const selectedSize = 28;
-  const size = isSelected ? selectedSize : baseSize;
-  const colorClass = isSelected ? getColorClass(value) : "text-gray-400";
-
-  switch (value) {
-    case "Very Unsatisfied":
-      return <SmileyXEyes size={size} className={colorClass} />;
-    case "Unsatisfied":
-      return <SmileySad size={size} className={colorClass} />;
-    case "Neutral":
-      return <SmileyMeh size={size} className={colorClass} />;
-    case "Satisfied":
-      return <Smiley size={size} className={colorClass} />;
-    case "Very Satisfied":
-      return <SmileyWink size={size} className={colorClass} />;
-    default:
-      return <Smiley size={size} className={colorClass} />;
-  }
-};
-
-const getColorClass = (value: string) => {
-  switch (value) {
-    case "Very Unsatisfied":
-      return "text-red-500";
-    case "Unsatisfied":
-      return "text-orange-500";
-    case "Neutral":
-      return "text-yellow-500";
-    case "Satisfied":
-      return "text-lime-500";
-    case "Very Satisfied":
-      return "text-green-500";
-    default:
-      return "text-gray-400";
-  }
-};
-
-const SmileyRatingInput = ({
+const StarRatingInput = ({
   field,
   onDelete,
   onChange,
 }: {
-  field: SmileyRatingInputFormType;
+  field: StarRatingInputFormType;
   onDelete: () => void;
   onChange: (id: string, updatedField: Partial<FormField>) => void;
 }) => {
@@ -71,9 +24,9 @@ const SmileyRatingInput = ({
         {label}
       </label>
       <div>
-        <fieldset className="flex justify-between">
-          {options.map(({ label, value: optionValue }) => (
-            <div key={optionValue} className="flex flex-col items-center">
+        <fieldset className="flex">
+          {options.map(({ value: optionValue }) => (
+            <div key={optionValue} className="mr-2">
               <input
                 type="radio"
                 id={`${id}-${optionValue}`}
@@ -86,14 +39,19 @@ const SmileyRatingInput = ({
               />
               <label
                 htmlFor={`${id}-${optionValue}`}
-                className="flex flex-col items-center cursor-pointer"
+                className="flex items-center justify-center h-10 w-10 cursor-pointer"
               >
-                {getSmileyIcon(optionValue, value === optionValue)}
-                <span
-                  className={`text-xs mt-1 ${value === optionValue ? "font-bold" : ""}`}
-                >
-                  {label}
-                </span>
+                <Star
+                  weight={
+                    Number(value) >= Number(optionValue) ? "fill" : "regular"
+                  }
+                  size={24}
+                  className={
+                    Number(value) >= Number(optionValue)
+                      ? "text-yellow-500"
+                      : "text-gray-400"
+                  }
+                />
               </label>
             </div>
           ))}
@@ -120,4 +78,4 @@ const SmileyRatingInput = ({
   );
 };
 
-export default SmileyRatingInput;
+export default StarRatingInput;

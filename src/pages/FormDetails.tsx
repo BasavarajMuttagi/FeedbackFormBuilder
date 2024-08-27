@@ -180,26 +180,37 @@ const FormDetails = () => {
     <AdminLayout>
       <AdminLayout.Main>
         <div className="h-full flex items-center justify-center">
-          <form className="max-w-lg w-full h-[40rem] bg-white overflow-y-hidden">
+          <form className="max-w-xl w-full h-[40rem] bg-white overflow-y-hidden">
             <div className="flex flex-col h-full space-y-2">
               <h2 className="p-3 bg-violet-800 outline-none w-full font-semibold tracking-wide text-white">
                 {formStructure.formName}
               </h2>
 
               <div
-                className="p-2 space-y-2 overflow-y-auto flex-1"
+                className="p-2 space-y-5 overflow-y-auto flex-1"
                 style={{ scrollbarWidth: "thin" }}
               >
-                {formStructure.formFields.map(renderFormField)}
+                {formStructure.formFields.length > 0 ? (
+                  formStructure.formFields.map(renderFormField)
+                ) : (
+                  <div className="h-full flex items-center justify-center">
+                    <p className="text-gray-500 text-2xl font-bold">
+                      Add Fields
+                    </p>
+                  </div>
+                )}
               </div>
-              <div className="align-bottom self-center p-2">
-                <button
-                  type="submit"
-                  className="px-3 py-1.5 bg-blue-500 rounded-md text-white"
-                >
-                  Submit
-                </button>
-              </div>
+
+              {formStructure.formFields.length > 0 && (
+                <div className="align-bottom self-center p-2">
+                  <button
+                    type="submit"
+                    className="px-3 py-1.5 bg-blue-500 rounded-md text-white"
+                  >
+                    Submit
+                  </button>
+                </div>
+              )}
             </div>
           </form>
         </div>
