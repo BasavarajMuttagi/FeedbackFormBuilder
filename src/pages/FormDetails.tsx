@@ -1,8 +1,17 @@
 import { useState } from "react";
 import {
+  CategoryFeedbackInputForm,
+  CategoryFeedbackInputFormType,
   FormField,
   FormStructure,
+  NumericRatingInputForm,
+  NumericRatingInputFormType,
   RadioInputForm,
+  RadioInputFormType,
+  SmileyRatingInputForm,
+  SmileyRatingInputFormType,
+  StarRatingInputForm,
+  StarRatingInputFormType,
   TextareaInputForm,
   TextareaInputFormType,
   TextInputForm,
@@ -14,6 +23,11 @@ import TextInput from "../components/Admin/TextInput";
 import TextareaInput from "../components/Admin/TextareaInput";
 import EditFieldForm from "../components/Admin/EditFieldForm";
 import { useActiveSelection } from "../hooks/useActiveSelection";
+import NumericRatingInput from "../components/Admin/NumericRatingInput";
+import RadioInput from "../components/Admin/RadioInput";
+import SmileyRatingInput from "../components/Admin/SmileyRatingInput";
+import StarRatingInput from "../components/Admin/StarRatingInput";
+import CategoryFeedbackInput from "../components/Admin/CategoryFeedbackInput";
 
 const FormDetails = () => {
   const [activeSelection, setActiveSelection] = useActiveSelection();
@@ -42,85 +56,123 @@ const FormDetails = () => {
     }));
   };
 
-  const createFormField = (type: "text" | "textarea" | "radio") => {
+  const createFormField = (
+    type: "text" | "textarea" | "radio",
+    subtype?:
+      | "numericrating"
+      | "starrating"
+      | "smileyrating"
+      | "categoryfeedback",
+  ) => {
     let newField: FormField;
 
-    switch (type) {
-      case "text":
-        newField = new TextInputForm();
-        break;
-      case "textarea":
-        newField = new TextareaInputForm();
-        break;
-      case "radio":
-        newField = new RadioInputForm();
-        break;
-      default:
-        return;
+    if (type === "text") {
+      newField = new TextInputForm();
+    } else if (type === "textarea") {
+      newField = new TextareaInputForm();
+    } else if (type === "radio") {
+      switch (subtype) {
+        case "numericrating":
+          newField = new NumericRatingInputForm();
+          break;
+        case "starrating":
+          newField = new StarRatingInputForm();
+          break;
+        case "smileyrating":
+          newField = new SmileyRatingInputForm();
+          break;
+        case "categoryfeedback":
+          newField = new CategoryFeedbackInputForm();
+          break;
+        default:
+          newField = new RadioInputForm();
+      }
+    } else {
+      console.error("Invalid field type");
+      return;
     }
 
-    setFormStructure((prevStructure) => ({
-      ...prevStructure,
-      formFields: [...prevStructure.formFields, newField],
-    }));
+    setFormStructure((prevStructure) => {
+      const updatedStructure = {
+        ...prevStructure,
+        formFields: [...prevStructure.formFields, newField],
+      };
+      console.log("Updated form structure:", updatedStructure);
+      return updatedStructure;
+    });
   };
 
   const renderFormField = (field: FormField) => {
-    switch (field.type) {
-      case "text":
-        return (
-          <TextInput
-            key={field.id}
-            field={field as TextInputFormType}
-            onDelete={() => onDelete(field.id)}
-            onChange={onChange}
-          />
-        );
-      case "textarea":
-        return (
-          <TextareaInput
-            key={field.id}
-            field={field as TextareaInputFormType}
-            onDelete={() => onDelete(field.id)}
-            onChange={onChange}
-          />
-        );
-      case "radio":
-        return (
-          <div key={field.id} className="flex flex-col">
-            <input
-              type="text"
-              value={field.label}
-              onChange={(e) => onChange(field.id, { label: e.target.value })}
-              placeholder="Enter radio group label"
+    console.log(field);
+    if (field.type === "text") {
+      return (
+        <TextInput
+          key={field.id}
+          field={field as TextInputFormType}
+          onDelete={() => onDelete(field.id)}
+          onChange={onChange}
+        />
+      );
+    } else if (field.type === "textarea") {
+      return (
+        <TextareaInput
+          key={field.id}
+          field={field as TextareaInputFormType}
+          onDelete={() => onDelete(field.id)}
+          onChange={onChange}
+        />
+      );
+    } else if (field.type === "radio") {
+      switch ((field as CategoryFeedbackInputFormType).subtype) {
+        case "numericrating":
+          return (
+            <NumericRatingInput
+              key={field.id}
+              field={field as NumericRatingInputFormType}
+              onDelete={() => onDelete(field.id)}
+              onChange={onChange}
             />
-            {(field as RadioInputForm).options.map((option, optionIndex) => (
-              <div key={optionIndex} className="flex items-center">
-                <input
-                  type="radio"
-                  name={`radio-group-${field.id}`}
-                  value={option.value}
-                  required={field.required}
-                />
-                <input
-                  type="text"
-                  value={option.label}
-                  onChange={(e) => {
-                    const updatedOptions = [
-                      ...(field as RadioInputForm).options,
-                    ];
-                    updatedOptions[optionIndex].label = e.target.value;
-                    onChange(field.id, { options: updatedOptions });
-                  }}
-                  className="ml-2"
-                />
-              </div>
-            ))}
-            <button onClick={() => onDelete(field.id)}>Delete</button>
-          </div>
-        );
-      default:
-        return null;
+          );
+        case "starrating":
+          return (
+            <StarRatingInput
+              key={field.id}
+              field={field as StarRatingInputFormType}
+              onDelete={() => onDelete(field.id)}
+              onChange={onChange}
+            />
+          );
+        case "smileyrating":
+          return (
+            <SmileyRatingInput
+              key={field.id}
+              field={field as SmileyRatingInputFormType}
+              onDelete={() => onDelete(field.id)}
+              onChange={onChange}
+            />
+          );
+
+        case "categoryfeedback":
+          return (
+            <CategoryFeedbackInput
+              key={field.id}
+              field={field as CategoryFeedbackInputFormType}
+              onDelete={() => onDelete(field.id)}
+              onChange={onChange}
+            />
+          );
+        default:
+          return (
+            <RadioInput
+              key={field.id}
+              field={field as RadioInputFormType}
+              onDelete={() => onDelete(field.id)}
+              onChange={onChange}
+            />
+          );
+      }
+    } else {
+      return null;
     }
   };
 

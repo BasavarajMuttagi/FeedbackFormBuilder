@@ -1,13 +1,13 @@
 import { PencilSimple, Trash } from "@phosphor-icons/react";
-import { FormField, NumericRatingInputFormType } from "../../Classes/Form";
+import { FormField, RadioInputFormType } from "../../Classes/Form";
 import { useActiveSelection } from "../../hooks/useActiveSelection";
 
-const NumericRatingInput = ({
+const RadioInput = ({
   field,
   onDelete,
   onChange,
 }: {
-  field: NumericRatingInputFormType;
+  field: RadioInputFormType;
   onDelete: () => void;
   onChange: (id: string, updatedField: Partial<FormField>) => void;
 }) => {
@@ -24,9 +24,9 @@ const NumericRatingInput = ({
         {label}
       </label>
       <div>
-        <fieldset className="flex">
+        <fieldset className="space-y-2">
           {options.map(({ label, value: optionValue }) => (
-            <div key={optionValue}>
+            <div key={optionValue} className="flex items-center">
               <input
                 type="radio"
                 id={`${id}-${optionValue}`}
@@ -35,11 +35,11 @@ const NumericRatingInput = ({
                 checked={value === optionValue}
                 onChange={() => handleInputChange(optionValue)}
                 required={required}
-                className="appearance-none peer"
+                className="mr-2"
               />
               <label
                 htmlFor={`${id}-${optionValue}`}
-                className="flex items-center justify-center h-10 w-12 border border-gray-300 cursor-pointer peer-checked:bg-green-500 peer-checked:text-white peer-checked:border-green-500"
+                className="cursor-pointer"
               >
                 {label}
               </label>
@@ -68,4 +68,4 @@ const NumericRatingInput = ({
   );
 };
 
-export default NumericRatingInput;
+export default RadioInput;

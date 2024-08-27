@@ -12,7 +12,14 @@ import {
 const SidePanel = ({
   createFormField,
 }: {
-  createFormField: (type: "text" | "textarea" | "radio") => void;
+  createFormField: (
+    type: "text" | "textarea" | "radio",
+    subtype?:
+      | "numericrating"
+      | "starrating"
+      | "smileyrating"
+      | "categoryfeedback",
+  ) => void;
 }) => {
   return (
     <div className="h-full text-white/60 space-y-5 p-4">
@@ -20,6 +27,18 @@ const SidePanel = ({
         Add Fields
       </h2>
       <ul className="flex flex-col space-y-5">
+        <li className="flex items-center justify-between">
+          <div className="inline-flex items-center space-x-3">
+            <Textbox size={24} weight="bold" />
+            <span>Single line input</span>
+          </div>
+          <Plus
+            size={24}
+            weight="bold"
+            className="text-blue-500 cursor-pointer"
+            onClick={() => createFormField("text")}
+          />
+        </li>
         <li className="flex items-center justify-between">
           <div className="inline-flex items-center space-x-3">
             <Notches size={24} weight="bold" />
@@ -41,40 +60,7 @@ const SidePanel = ({
             size={24}
             weight="bold"
             className="text-blue-500 cursor-pointer"
-          />
-        </li>
-        <li className="flex items-center justify-between">
-          <div className="inline-flex items-center space-x-3">
-            <Star size={24} weight="bold" />
-            <span>Star Rating</span>
-          </div>
-          <Plus
-            size={24}
-            weight="bold"
-            className="text-blue-500 cursor-pointer"
-          />
-        </li>
-        <li className="flex items-center justify-between">
-          <div className="inline-flex items-center space-x-3">
-            <Smiley size={24} weight="bold" />
-            <span>Smiley Rating</span>
-          </div>
-          <Plus
-            size={24}
-            weight="bold"
-            className="text-blue-500 cursor-pointer"
-          />
-        </li>
-        <li className="flex items-center justify-between">
-          <div className="inline-flex items-center space-x-3">
-            <Textbox size={24} weight="bold" />
-            <span>Single line input</span>
-          </div>
-          <Plus
-            size={24}
-            weight="bold"
-            className="text-blue-500 cursor-pointer"
-            onClick={() => createFormField("text")}
+            onClick={() => createFormField("radio", "numericrating")}
           />
         </li>
         <li className="flex items-center justify-between">
@@ -91,6 +77,30 @@ const SidePanel = ({
         </li>
         <li className="flex items-center justify-between">
           <div className="inline-flex items-center space-x-3">
+            <Star size={24} weight="bold" />
+            <span>Star Rating</span>
+          </div>
+          <Plus
+            size={24}
+            weight="bold"
+            className="text-blue-500 cursor-pointer"
+            onClick={() => createFormField("radio", "starrating")}
+          />
+        </li>
+        <li className="flex items-center justify-between">
+          <div className="inline-flex items-center space-x-3">
+            <Smiley size={24} weight="bold" />
+            <span>Smiley Rating</span>
+          </div>
+          <Plus
+            size={24}
+            weight="bold"
+            className="text-blue-500 cursor-pointer"
+            onClick={() => createFormField("radio", "smileyrating")}
+          />
+        </li>
+        <li className="flex items-center justify-between">
+          <div className="inline-flex items-center space-x-3">
             <Table size={24} weight="bold" />
             <span>Categories</span>
           </div>
@@ -98,6 +108,7 @@ const SidePanel = ({
             size={24}
             weight="bold"
             className="text-blue-500 cursor-pointer"
+            onClick={() => createFormField("radio", "categoryfeedback")}
           />
         </li>
       </ul>
