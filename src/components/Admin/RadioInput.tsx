@@ -6,10 +6,12 @@ const RadioInput = ({
   field,
   onDelete,
   onChange,
+  showError,
 }: {
   field: RadioInputFormType;
   onDelete: () => void;
   onChange: (id: string, updatedField: Partial<FormField>) => void;
+  showError: boolean;
 }) => {
   const setActiveSelection = useActiveSelection()[1];
   const { errorMessage, id, label, options, value, required } = field;
@@ -48,7 +50,7 @@ const RadioInput = ({
         </fieldset>
       </div>
 
-      {errorMessage && <p className="text-red-400 text-xs">{errorMessage}</p>}
+      {showError && <p className="text-red-400 text-xs">{errorMessage}</p>}
 
       <div className="flex items-center justify-end space-x-5">
         <PencilSimple

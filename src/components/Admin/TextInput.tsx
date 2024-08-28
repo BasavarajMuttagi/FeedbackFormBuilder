@@ -6,10 +6,12 @@ const TextInput = ({
   field,
   onDelete,
   onChange,
+  showError,
 }: {
   field: TextInputFormType;
   onDelete: () => void;
   onChange: (id: string, updatedField: Partial<FormField>) => void;
+  showError: boolean;
 }) => {
   const setActiveSelection = useActiveSelection()[1];
   const { errorMessage, id, label, ...rest } = field;
@@ -27,7 +29,7 @@ const TextInput = ({
           onChange={(e) => handleInputChange(e)}
           className="border border-gray-600/15 w-full p-2 outline-none"
         />
-        <p className="text-red-400 text-xs">{errorMessage}</p>
+        {showError && <p className="text-red-400 text-xs">{errorMessage}</p>}
       </label>
 
       <div className="flex items-center justify-end space-x-5">

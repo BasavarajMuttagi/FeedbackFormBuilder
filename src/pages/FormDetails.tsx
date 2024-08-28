@@ -28,20 +28,30 @@ import RadioInput from "../components/Admin/RadioInput";
 import SmileyRatingInput from "../components/Admin/SmileyRatingInput";
 import StarRatingInput from "../components/Admin/StarRatingInput";
 import CategoryFeedbackInput from "../components/Admin/CategoryFeedbackInput";
+import { validateForm } from "../helpers";
 
 const FormDetails = () => {
   const [activeSelection, setActiveSelection] = useActiveSelection();
+  const [formErrors, setFormErrors] = useState<boolean[]>([]);
   const [formStructure, setFormStructure] = useState<FormStructure>({
     formName: "Enter Your Form Name",
     formFields: [],
   });
 
   const onDelete = (id: string) => {
+    const fieldIndex = formStructure.formFields.findIndex(
+      (field) => field.id === id,
+    );
     setFormStructure((prevStructure) => ({
       ...prevStructure,
       formFields: prevStructure.formFields.filter((field) => field.id !== id),
     }));
 
+    setFormErrors((prevErrors) => {
+      const newErrors = [...prevErrors];
+      newErrors.splice(fieldIndex, 1);
+      return newErrors;
+    });
     if (typeof activeSelection === "object" && activeSelection.id === id) {
       setActiveSelection("FIELDS");
     }
@@ -101,7 +111,8 @@ const FormDetails = () => {
     });
   };
 
-  const renderFormField = (field: FormField) => {
+  const renderFormField = (field: FormField, index: number) => {
+    const showError = formErrors[index];
     if (field.type === "text") {
       return (
         <TextInput
@@ -109,6 +120,7 @@ const FormDetails = () => {
           field={field as TextInputFormType}
           onDelete={() => onDelete(field.id)}
           onChange={onChange}
+          showError={showError}
         />
       );
     } else if (field.type === "textarea") {
@@ -118,6 +130,7 @@ const FormDetails = () => {
           field={field as TextareaInputFormType}
           onDelete={() => onDelete(field.id)}
           onChange={onChange}
+          showError={showError}
         />
       );
     } else if (field.type === "radio") {
@@ -129,6 +142,7 @@ const FormDetails = () => {
               field={field as NumericRatingInputFormType}
               onDelete={() => onDelete(field.id)}
               onChange={onChange}
+              showError={showError}
             />
           );
         case "starrating":
@@ -138,6 +152,7 @@ const FormDetails = () => {
               field={field as StarRatingInputFormType}
               onDelete={() => onDelete(field.id)}
               onChange={onChange}
+              showError={showError}
             />
           );
         case "smileyrating":
@@ -147,6 +162,7 @@ const FormDetails = () => {
               field={field as SmileyRatingInputFormType}
               onDelete={() => onDelete(field.id)}
               onChange={onChange}
+              showError={showError}
             />
           );
 
@@ -157,6 +173,7 @@ const FormDetails = () => {
               field={field as CategoryFeedbackInputFormType}
               onDelete={() => onDelete(field.id)}
               onChange={onChange}
+              showError={showError}
             />
           );
         default:
@@ -166,6 +183,7 @@ const FormDetails = () => {
               field={field as RadioInputFormType}
               onDelete={() => onDelete(field.id)}
               onChange={onChange}
+              showError={showError}
             />
           );
       }
@@ -176,6 +194,14 @@ const FormDetails = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const validationResult = validateForm(formStructure);
+    setFormErrors(validationResult.fieldErrors);
+    if (validationResult.isValid) {
+      console.log("Form is valid, proceed with submission");
+      console.log(formStructure);
+    } else {
+      console.log("Form is invalid");
+    }
   };
 
   return (
@@ -197,7 +223,9 @@ const FormDetails = () => {
                 style={{ scrollbarWidth: "thin" }}
               >
                 {formStructure.formFields.length > 0 ? (
-                  formStructure.formFields.map(renderFormField)
+                  formStructure.formFields.map((field, index) =>
+                    renderFormField(field, index),
+                  )
                 ) : (
                   <div className="h-full flex items-center justify-center">
                     <p className="text-gray-500 text-2xl font-bold">
