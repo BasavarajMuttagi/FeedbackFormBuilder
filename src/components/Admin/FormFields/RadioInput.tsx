@@ -9,7 +9,7 @@ const RadioInput = ({
   showError,
 }: {
   field: RadioInputFormType;
-  onDelete: () => void;
+  onDelete?: () => void;
   onChange: (id: string, updatedField: Partial<FormField>) => void;
   showError: boolean;
 }) => {
@@ -52,20 +52,22 @@ const RadioInput = ({
 
       {showError && <p className="text-red-400 text-xs">{errorMessage}</p>}
 
-      <div className="flex items-center justify-end space-x-5">
-        <PencilSimple
-          size={20}
-          weight="fill"
-          className="text-gray-600 cursor-pointer"
-          onClick={() => setActiveSelection({ id })}
-        />
-        <Trash
-          size={20}
-          weight="fill"
-          className="text-gray-600 cursor-pointer"
-          onClick={onDelete}
-        />
-      </div>
+      {onDelete && (
+        <div className="flex items-center justify-end space-x-5">
+          <PencilSimple
+            size={20}
+            weight="fill"
+            className="text-gray-600 cursor-pointer"
+            onClick={() => setActiveSelection({ id })}
+          />
+          <Trash
+            size={20}
+            weight="fill"
+            className="text-gray-600 cursor-pointer"
+            onClick={() => onDelete()}
+          />
+        </div>
+      )}
     </div>
   );
 };
