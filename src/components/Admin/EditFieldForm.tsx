@@ -7,6 +7,7 @@ import {
   SmileyRatingInputFormType,
 } from "../../Classes/Form";
 import { useActiveSelection } from "../../hooks/useActiveSelection";
+import Switch from "react-switch";
 
 type FieldValue = string | boolean | Array<{ value: string; label: string }>;
 
@@ -105,16 +106,23 @@ const EditFieldForm = ({
         />
       </div>
 
-      <div className="space-y-1">
-        <label htmlFor="required" className="block">
-          Required
-        </label>
-        <input
-          id="required"
-          type="checkbox"
+      <div className="flex items-center space-x-5">
+        <label htmlFor="required">Required</label>
+
+        <Switch
           checked={editedField.required}
-          className="px-3 py-1 bg-inherit outline-none border border-white/10"
-          onChange={(e) => handleInputChange("required", e.target.checked)}
+          onChange={(e) => handleInputChange("required", e)}
+          onColor="#86d3ff"
+          onHandleColor="#2693e6"
+          handleDiameter={30}
+          uncheckedIcon={false}
+          checkedIcon={false}
+          boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+          activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+          height={20}
+          width={48}
+          className="react-switch"
+          id="material-switch"
         />
       </div>
 
