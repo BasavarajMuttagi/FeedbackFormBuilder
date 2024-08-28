@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import FormListing from "../pages/FormListing";
-import FormDetails from "../pages/FormDetails";
+import ListForms from "../pages/ListForms";
+import CreateForm from "../pages/CreateForm";
 import Home from "../pages/Home";
 const routes = createBrowserRouter([
   {
@@ -8,12 +8,17 @@ const routes = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/listing",
-    element: <FormListing />,
-  },
-  {
-    path: "/details",
-    element: <FormDetails />,
+    path: "/admin",
+    children: [
+      {
+        path: "",
+        element: <ListForms />,
+      },
+      {
+        path: "create",
+        element: <CreateForm />,
+      },
+    ],
   },
 ]);
 export default routes;

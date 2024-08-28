@@ -1,4 +1,5 @@
 import { CaretDown, User } from "@phosphor-icons/react";
+import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <header className="text-white/80 flex flex-col items-end px-[5%]">
@@ -17,10 +18,13 @@ const Header = () => {
             <CaretDown size={14} />
           </li>
         </ul>
-        <button className="px-4 py-1 rounded-full border border-white inline-flex items-center space-x-4 font-bold">
+        <Link
+          to={"/admin"}
+          className="px-4 py-1 rounded-full border border-white inline-flex items-center space-x-4 font-bold"
+        >
           <User size={16} weight="fill" />
-          <span>SIGN IN</span>
-        </button>
+          <span>ADMIN</span>
+        </Link>
       </nav>
       <div className="w-full border-b border-white/10"></div>
       <ul className="space-x-5 text-xs text-white/50 p-3 inline-flex">

@@ -20,7 +20,7 @@ const Home = () => {
       </div>
       {showUploadPopUp &&
         createPortal(
-          <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 p-3">
+          <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 p-3 z-50">
             <FeedbackForm closeDialog={setShowUploadPopUp} />
           </div>,
           document.body,

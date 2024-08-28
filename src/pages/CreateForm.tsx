@@ -30,7 +30,7 @@ import StarRatingInput from "../components/Admin/FormFields/StarRatingInput";
 import CategoryFeedbackInput from "../components/Admin/FormFields/CategoryFeedbackInput";
 import { validateForm } from "../helpers";
 
-const FormDetails = () => {
+const CreateForm = () => {
   const [activeSelection, setActiveSelection] = useActiveSelection();
   const [formErrors, setFormErrors] = useState<boolean[]>([]);
   const [formStructure, setFormStructure] = useState<FormStructure>({
@@ -263,7 +263,7 @@ const FormDetails = () => {
                     type="submit"
                     className="px-3 py-1.5 bg-blue-500 rounded-md text-white"
                   >
-                    Submit
+                    Test Validation
                   </button>
                 </div>
               )}
@@ -285,4 +285,4 @@ const FormDetails = () => {
   );
 };
 
-export default FormDetails;
+export default CreateForm;

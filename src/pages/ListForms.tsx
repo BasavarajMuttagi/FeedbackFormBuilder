@@ -2,7 +2,7 @@ import FormImpressions from "../components/Admin/FormImpressions";
 import AddNewForm from "../components/Admin/AddNewForm";
 import AdminLayout from "../layouts/AdminLayout";
 
-const FormListing = () => {
+const ListForms = () => {
   return (
     <AdminLayout>
       <AdminLayout.Main>
@@ -23,4 +23,4 @@ const FormListing = () => {
   );
 };
 
-export default FormListing;
+export default ListForms;
