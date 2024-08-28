@@ -26,7 +26,7 @@ const StarRatingInput = ({
       <div>
         <fieldset className="flex">
           {options.map(({ value: optionValue }) => (
-            <div key={optionValue} className="mr-2">
+            <div key={optionValue} className="space-x-2">
               <input
                 type="radio"
                 id={`${id}-${optionValue}`}

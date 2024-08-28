@@ -97,13 +97,11 @@ const FormDetails = () => {
         ...prevStructure,
         formFields: [...prevStructure.formFields, newField],
       };
-      console.log("Updated form structure:", updatedStructure);
       return updatedStructure;
     });
   };
 
   const renderFormField = (field: FormField) => {
-    console.log(field);
     if (field.type === "text") {
       return (
         <TextInput
@@ -176,11 +174,19 @@ const FormDetails = () => {
     }
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <AdminLayout>
       <AdminLayout.Main>
         <div className="h-full flex items-center justify-center">
-          <form className="max-w-xl w-full h-[40rem] bg-white overflow-y-hidden">
+          <form
+            className="max-w-xl w-full h-[40rem] bg-white overflow-y-hidden"
+            onSubmit={handleSubmit}
+            noValidate
+          >
             <div className="flex flex-col h-full space-y-2">
               <h2 className="p-3 bg-violet-800 outline-none w-full font-semibold tracking-wide text-white">
                 {formStructure.formName}
