@@ -1,6 +1,6 @@
 import { PencilSimple, Trash } from "@phosphor-icons/react";
-import { FormField, RadioInputFormType } from "../../Classes/Form";
-import { useActiveSelection } from "../../hooks/useActiveSelection";
+import { FormField, RadioInputFormType } from "../../../Classes/Form";
+import { useActiveSelection } from "../../../hooks/useActiveSelection";
 
 const RadioInput = ({
   field,

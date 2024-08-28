@@ -1,6 +1,6 @@
 import { PencilSimple, Trash } from "@phosphor-icons/react";
-import { FormField, TextInputFormType } from "../../Classes/Form";
-import { useActiveSelection } from "../../hooks/useActiveSelection";
+import { FormField, TextInputFormType } from "../../../Classes/Form";
+import { useActiveSelection } from "../../../hooks/useActiveSelection";
 
 const TextInput = ({
   field,

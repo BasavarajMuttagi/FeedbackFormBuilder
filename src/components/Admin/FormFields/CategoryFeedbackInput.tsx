@@ -1,6 +1,9 @@
 import { PencilSimple, Trash } from "@phosphor-icons/react";
-import { FormField, CategoryFeedbackInputFormType } from "../../Classes/Form";
-import { useActiveSelection } from "../../hooks/useActiveSelection";
+import {
+  FormField,
+  CategoryFeedbackInputFormType,
+} from "../../../Classes/Form";
+import { useActiveSelection } from "../../../hooks/useActiveSelection";
 
 const CategoryFeedbackInput = ({
   field,

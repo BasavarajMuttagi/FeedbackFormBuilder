@@ -1,6 +1,6 @@
 import { PencilSimple, Trash } from "@phosphor-icons/react";
-import { FormField, NumericRatingInputFormType } from "../../Classes/Form";
-import { useActiveSelection } from "../../hooks/useActiveSelection";
+import { FormField, NumericRatingInputFormType } from "../../../Classes/Form";
+import { useActiveSelection } from "../../../hooks/useActiveSelection";
 
 const NumericRatingInput = ({
   field,

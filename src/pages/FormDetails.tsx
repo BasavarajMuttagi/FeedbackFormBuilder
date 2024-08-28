@@ -17,17 +17,17 @@ import {
   TextInputForm,
   TextInputFormType,
 } from "../Classes/Form";
-import SidePanel from "../components/Admin/SidePanel";
+import SidePanel from "../components/Admin/SidePanel/SidePanel";
 import AdminLayout from "../layouts/AdminLayout";
-import TextInput from "../components/Admin/TextInput";
-import TextareaInput from "../components/Admin/TextareaInput";
-import EditFieldForm from "../components/Admin/EditFieldForm";
+import TextInput from "../components/Admin/FormFields/TextInput";
+import TextareaInput from "../components/Admin/FormFields/TextareaInput";
+import EditFieldForm from "../components/Admin/SidePanel/EditFieldForm";
 import { useActiveSelection } from "../hooks/useActiveSelection";
-import NumericRatingInput from "../components/Admin/NumericRatingInput";
-import RadioInput from "../components/Admin/RadioInput";
-import SmileyRatingInput from "../components/Admin/SmileyRatingInput";
-import StarRatingInput from "../components/Admin/StarRatingInput";
-import CategoryFeedbackInput from "../components/Admin/CategoryFeedbackInput";
+import NumericRatingInput from "../components/Admin/FormFields/NumericRatingInput";
+import RadioInput from "../components/Admin/FormFields/RadioInput";
+import SmileyRatingInput from "../components/Admin/FormFields/SmileyRatingInput";
+import StarRatingInput from "../components/Admin/FormFields/StarRatingInput";
+import CategoryFeedbackInput from "../components/Admin/FormFields/CategoryFeedbackInput";
 import { validateForm } from "../helpers";
 
 const FormDetails = () => {

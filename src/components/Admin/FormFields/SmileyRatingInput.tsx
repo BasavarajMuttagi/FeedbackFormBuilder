@@ -7,8 +7,8 @@ import {
   SmileyXEyes,
   Trash,
 } from "@phosphor-icons/react";
-import { FormField, SmileyRatingInputFormType } from "../../Classes/Form";
-import { useActiveSelection } from "../../hooks/useActiveSelection";
+import { FormField, SmileyRatingInputFormType } from "../../../Classes/Form";
+import { useActiveSelection } from "../../../hooks/useActiveSelection";
 
 const getSmileyIcon = (value: string, isSelected: boolean) => {
   const baseSize = 24;

@@ -1,6 +1,6 @@
 import { PencilSimple, Star, Trash } from "@phosphor-icons/react";
-import { FormField, StarRatingInputFormType } from "../../Classes/Form";
-import { useActiveSelection } from "../../hooks/useActiveSelection";
+import { FormField, StarRatingInputFormType } from "../../../Classes/Form";
+import { useActiveSelection } from "../../../hooks/useActiveSelection";
 
 const StarRatingInput = ({
   field,

@@ -5,8 +5,8 @@ import {
   NumericRatingInputFormType,
   StarRatingInputFormType,
   SmileyRatingInputFormType,
-} from "../../Classes/Form";
-import { useActiveSelection } from "../../hooks/useActiveSelection";
+} from "../../../Classes/Form";
+import { useActiveSelection } from "../../../hooks/useActiveSelection";
 import Switch from "react-switch";
 
 type FieldValue = string | boolean | Array<{ value: string; label: string }>;
