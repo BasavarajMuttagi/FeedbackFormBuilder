@@ -3,6 +3,8 @@ import {
   FormField,
   RadioInputFormType,
   NumericRatingInputFormType,
+  StarRatingInputFormType,
+  SmileyRatingInputFormType,
 } from "../../Classes/Form";
 import { useActiveSelection } from "../../hooks/useActiveSelection";
 
@@ -65,6 +67,14 @@ const EditFieldForm = ({
 
   if (!editedField) return null;
 
+  const showOptionsEdit =
+    editedField.type === "radio" &&
+    !(
+      editedField as
+        | NumericRatingInputFormType
+        | StarRatingInputFormType
+        | SmileyRatingInputFormType
+    ).subtype;
   return (
     <form className="text-white p-2 text-sm space-y-5">
       <div className="space-y-1">
@@ -108,9 +118,7 @@ const EditFieldForm = ({
         />
       </div>
 
-      {(editedField.type === "radio" ||
-        (editedField as NumericRatingInputFormType).subtype ===
-          "numericrating") && (
+      {showOptionsEdit && (
         <div className="space-y-2">
           <label className="block">Options</label>
           {(
