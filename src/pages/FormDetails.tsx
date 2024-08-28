@@ -224,15 +224,16 @@ const FormDetails = () => {
             <div className="flex flex-col h-full space-y-2">
               {isEditingFormName ? (
                 <input
-                  className="p-3 bg-violet-800 outline-none w-full font-semibold tracking-wide text-white"
+                  className="p-3 bg-violet-800 outline-none w-full font-semibold tracking-wide text-white h-10"
                   value={formStructure.formName}
                   onChange={(e) => handleFormNameChange(e.target.value)}
                   onBlur={() => setIsEditingFormName(false)}
                   autoFocus
+                  required
                 />
               ) : (
                 <h1
-                  className="p-3 bg-violet-800 outline-none w-full font-semibold tracking-wide text-white"
+                  className="p-3 bg-violet-800 outline-none w-full font-semibold tracking-wide text-white h-10"
                   onClick={() => setIsEditingFormName(true)}
                 >
                   {formStructure.formName}
