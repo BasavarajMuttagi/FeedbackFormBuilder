@@ -38,6 +38,8 @@ const FormDetails = () => {
     formFields: [],
   });
 
+  const [isEditingFormName, setIsEditingFormName] = useState(false);
+
   const onDelete = (id: string) => {
     const fieldIndex = formStructure.formFields.findIndex(
       (field) => field.id === id,
@@ -204,6 +206,12 @@ const FormDetails = () => {
     }
   };
 
+  const handleFormNameChange = (newName: string) => {
+    setFormStructure((prevStructure) => ({
+      ...prevStructure,
+      formName: newName,
+    }));
+  };
   return (
     <AdminLayout>
       <AdminLayout.Main>
@@ -214,9 +222,22 @@ const FormDetails = () => {
             noValidate
           >
             <div className="flex flex-col h-full space-y-2">
-              <h2 className="p-3 bg-violet-800 outline-none w-full font-semibold tracking-wide text-white">
-                {formStructure.formName}
-              </h2>
+              {isEditingFormName ? (
+                <input
+                  className="p-3 bg-violet-800 outline-none w-full font-semibold tracking-wide text-white"
+                  value={formStructure.formName}
+                  onChange={(e) => handleFormNameChange(e.target.value)}
+                  onBlur={() => setIsEditingFormName(false)}
+                  autoFocus
+                />
+              ) : (
+                <h1
+                  className="p-3 bg-violet-800 outline-none w-full font-semibold tracking-wide text-white"
+                  onClick={() => setIsEditingFormName(true)}
+                >
+                  {formStructure.formName}
+                </h1>
+              )}
 
               <div
                 className="p-2 space-y-5 overflow-y-auto flex-1"
