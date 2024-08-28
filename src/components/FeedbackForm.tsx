@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
   CategoryFeedbackInputFormType,
   FormField,
-  FormStructure,
   NumericRatingInputFormType,
   RadioInputFormType,
   SmileyRatingInputFormType,
@@ -20,6 +19,8 @@ import CategoryFeedbackInput from "../components/Admin/FormFields/CategoryFeedba
 import { validateForm } from "../helpers";
 import { X } from "@phosphor-icons/react";
 import ThankYou from "./ThankYou";
+import apiClient from "../axios/apiClient";
+import { FeedbackFormResponseType } from "../types";
 
 const FeedbackForm = ({
   closeDialog,
@@ -27,205 +28,38 @@ const FeedbackForm = ({
   closeDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [formErrors, setFormErrors] = useState<boolean[]>([]);
-  const [formStructure, setFormStructure] = useState<FormStructure>({
-    formName: "Enter Your Form Name",
+  const [formStructure, setFormStructure] = useState<FeedbackFormResponseType>({
+    createdAt: "",
+    id: "",
+    updatedAt: "",
+    formName: "",
     formFields: [],
   });
 
   const [isFormSubmit, setIsFormSubmit] = useState(false);
 
+  const incrementCount = (id: string) => {
+    apiClient.get(`/feedback/forms/increment-view/${id}`);
+  };
+
+  const submitForm = async () => {
+    const result = await apiClient.post(
+      "/feedback/forms/d53be41b-8406-488a-880c-23d2b8886bcb/responses",
+      { formFields: formStructure.formFields },
+    );
+    console.log(result);
+  };
   useEffect(() => {
-    setFormStructure({
-      formName: "Enter Your Form Name",
-      formFields: [
-        {
-          label: "Text Input",
-          type: "text",
-          required: true,
-          errorMessage: "Please enter a valid text",
-          value: "ABCD",
-          id: "3648ba8c-50af-4348-bb23-842c6adf6532",
-          placeholder: "Enter text here",
-        },
-        {
-          label: "Textarea Input",
-          type: "textarea",
-          required: true,
-          errorMessage: "Please enter a valid text",
-          value: "EFGH",
-          id: "44e943fe-2090-4b01-aba1-2ae1b2b11ca1",
-          placeholder: "Enter long text here",
-        },
-        {
-          label: "Numeric Rating",
-          type: "radio",
-          required: true,
-          errorMessage: "Please select a rating",
-          value: "7",
-          id: "9519fd99-066a-461b-a189-e5ba5d446bd8",
-          options: [
-            {
-              value: "1",
-              label: "1",
-            },
-            {
-              value: "2",
-              label: "2",
-            },
-            {
-              value: "3",
-              label: "3",
-            },
-            {
-              value: "4",
-              label: "4",
-            },
-            {
-              value: "5",
-              label: "5",
-            },
-            {
-              value: "6",
-              label: "6",
-            },
-            {
-              value: "7",
-              label: "7",
-            },
-            {
-              value: "8",
-              label: "8",
-            },
-            {
-              value: "9",
-              label: "9",
-            },
-            {
-              value: "10",
-              label: "10",
-            },
-          ],
-          subtype: "numericrating",
-        },
-        {
-          label: "Radio Input",
-          type: "radio",
-          required: true,
-          errorMessage: "Please select an option",
-          value: "option3",
-          id: "5856189f-21f7-4c3a-a0a4-10b8d4a773de",
-          options: [
-            {
-              value: "option1",
-              label: "Option 1",
-            },
-            {
-              value: "option2",
-              label: "Option 2",
-            },
-            {
-              value: "option3",
-              label: "Option 3",
-            },
-          ],
-        },
-        {
-          label: "Star Rating",
-          type: "radio",
-          required: true,
-          errorMessage: "Please select an star rating",
-          value: "5",
-          id: "77843970-b77d-413b-85b2-968197f931b0",
-          options: [
-            {
-              value: "1",
-              label: "1",
-            },
-            {
-              value: "2",
-              label: "2",
-            },
-            {
-              value: "3",
-              label: "3",
-            },
-            {
-              value: "4",
-              label: "4",
-            },
-            {
-              value: "5",
-              label: "5",
-            },
-          ],
-          subtype: "starrating",
-        },
-        {
-          label: "Smiley Rating",
-          type: "radio",
-          required: true,
-          errorMessage: "Please select a smiley rating",
-          value: "Very Satisfied",
-          id: "f920fe32-1a9a-4e43-985b-08175ad0cf90",
-          options: [
-            {
-              value: "Very Unsatisfied",
-              label: "Very Unsatisfied",
-            },
-            {
-              value: "Unsatisfied",
-              label: "Unsatisfied",
-            },
-            {
-              value: "Neutral",
-              label: "Neutral",
-            },
-            {
-              value: "Satisfied",
-              label: "Satisfied",
-            },
-            {
-              value: "Very Satisfied",
-              label: "Very Satisfied",
-            },
-          ],
-          subtype: "smileyrating",
-        },
-        {
-          label: "Category Feedback",
-          type: "radio",
-          required: true,
-          errorMessage: "Please select an option",
-          value: "Bug",
-          id: "ce3cdf65-bbc0-4c3e-b9bd-1051ce0ffe8f",
-          options: [
-            {
-              value: "Bug",
-              label: "Bug",
-            },
-            {
-              value: "Content",
-              label: "Content",
-            },
-            {
-              value: "Other",
-              label: "Other",
-            },
-          ],
-          subtype: "categoryfeedback",
-          textareaInput: {
-            label: "Provide feedback",
-            type: "textarea",
-            required: true,
-            errorMessage: "Please enter a valid text",
-            value: "Hello world!",
-            id: "4e9eb668-236d-4110-a176-33e3bb4ebb0e",
-            placeholder: "Enter text here",
-          },
-        },
-      ],
-    });
+    const getForm = async () => {
+      const result = await apiClient.get(
+        "/feedback/forms/d53be41b-8406-488a-880c-23d2b8886bcb",
+      );
+      setFormStructure(result.data as FeedbackFormResponseType);
+      incrementCount((result.data as FeedbackFormResponseType).id);
+    };
+    getForm();
   }, []);
+
   const onChange = (id: string, updatedField: Partial<FormField>) => {
     setFormStructure((prevStructure) => ({
       ...prevStructure,
@@ -309,13 +143,14 @@ const FeedbackForm = ({
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validationResult = validateForm(formStructure);
     setFormErrors(validationResult.fieldErrors);
     if (validationResult.isValid) {
       console.log("Form is valid, proceed with submission");
       console.log(formStructure);
+      await submitForm();
       setIsFormSubmit(true);
     } else {
       console.log("Form is invalid");
@@ -327,7 +162,7 @@ const FeedbackForm = ({
   }
 
   return (
-    <div className="relative">
+    <div className="relative max-w-xl w-full">
       <div
         className="p-2 rounded-full bg-white w-fit absolute -top-2 -right-2 z-10 cursor-pointer"
         onClick={() => closeDialog(false)}
@@ -335,7 +170,7 @@ const FeedbackForm = ({
         <X size={16} className="text-black" />
       </div>
       <form
-        className="max-w-xl w-full h-[40rem] bg-white overflow-y-hidden"
+        className="h-[40rem] bg-white overflow-y-hidden"
         onSubmit={handleSubmit}
         noValidate
       >
