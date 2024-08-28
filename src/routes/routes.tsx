@@ -1,7 +1,9 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 import ListForms from "../pages/ListForms";
 import CreateForm from "../pages/CreateForm";
 import Home from "../pages/Home";
+import FormDetails from "../pages/FormDetails";
+import AdminLayout from "../layouts/AdminLayout";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -9,14 +11,25 @@ const routes = createBrowserRouter([
   },
   {
     path: "/admin",
+    element: (
+      <AdminLayout>
+        <AdminLayout.Main>
+          <Outlet />
+        </AdminLayout.Main>
+      </AdminLayout>
+    ),
     children: [
       {
         path: "",
         element: <ListForms />,
       },
       {
-        path: "create",
+        path: "form/create",
         element: <CreateForm />,
+      },
+      {
+        path: "form/details/:id",
+        element: <FormDetails />,
       },
     ],
   },

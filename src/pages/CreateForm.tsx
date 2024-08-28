@@ -29,6 +29,7 @@ import SmileyRatingInput from "../components/Admin/FormFields/SmileyRatingInput"
 import StarRatingInput from "../components/Admin/FormFields/StarRatingInput";
 import CategoryFeedbackInput from "../components/Admin/FormFields/CategoryFeedbackInput";
 import { validateForm } from "../helpers";
+import apiClient from "../axios/apiClient";
 
 const CreateForm = () => {
   const [activeSelection, setActiveSelection] = useActiveSelection();
@@ -40,6 +41,13 @@ const CreateForm = () => {
 
   const [isEditingFormName, setIsEditingFormName] = useState(false);
 
+  const handleSave = async () => {
+    const result = await apiClient.post(
+      "/feedback/forms/create",
+      formStructure,
+    );
+    console.log(result);
+  };
   const onDelete = (id: string) => {
     const fieldIndex = formStructure.formFields.findIndex(
       (field) => field.id === id,
@@ -261,6 +269,7 @@ const CreateForm = () => {
                 <div className="align-bottom self-center p-2">
                   <button
                     type="submit"
+                    onClick={handleSave}
                     className="px-3 py-1.5 bg-blue-500 rounded-md text-white"
                   >
                     Test Validation
